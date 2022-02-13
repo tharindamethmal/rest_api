@@ -29,11 +29,11 @@ public class AddressBooksService {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Transactional
-	public void createAddressBook(String name) {
+	public AddressBook createAddressBook(String name) {
 		AddressBook toBeSavedadddressBook = new AddressBook(name, new ArrayList<Contact>());
 		assertValidAddressBook(toBeSavedadddressBook);
 
-		addressBookRepository.save(toBeSavedadddressBook);
+		return addressBookRepository.save(toBeSavedadddressBook);
 	}
 
 	@Transactional

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.assignment.reece.address_book_api.controllers.dto.ContactDto;
 import com.assignment.reece.address_book_api.controllers.dto.CreateAddressBookDto;
+import com.assignment.reece.address_book_api.persistence.entities.AddressBook;
 import com.assignment.reece.address_book_api.persistence.entities.Contact;
 import com.assignment.reece.address_book_api.service.AddressBooksService;
 
@@ -37,12 +38,13 @@ public class AddressBookController {
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
 	@Operation(description = "Create a new address book")
-	public void createAddressBook(@Valid @RequestBody CreateAddressBookDto createAddressBookDto) {
+	public Integer createAddressBook(@Valid @RequestBody CreateAddressBookDto createAddressBookDto) {
 		logger.info("Http request received to create a new address book with name {}", createAddressBookDto.getName());
 
-		addressBooksService.createAddressBook(createAddressBookDto.getName());
-
+		AddressBook addressBook = addressBooksService.createAddressBook(createAddressBookDto.getName());
 		logger.info("Successfully created an address book with name {}", createAddressBookDto.getName());
+		return addressBook.getId();
+		
 
 	}
 
