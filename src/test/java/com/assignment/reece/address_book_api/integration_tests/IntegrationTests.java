@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -64,7 +63,7 @@ public class IntegrationTests {
 
 		CreateContactDto contact1 = new CreateContactDto(addressBook1Id, "Jone", phoneNumbersList1);
 
-		ResponseEntity<String> responseEntity3=this.restTemplate.postForEntity(
+		ResponseEntity<String> responseEntity3 = this.restTemplate.postForEntity(
 				Contstants.SERVER_URL + port + Contstants.APPLICATION_CONTEXT_PATH + "/contacts", contact1,
 				String.class);
 		assertEquals(HttpStatus.CREATED, responseEntity3.getStatusCode());
@@ -78,7 +77,7 @@ public class IntegrationTests {
 
 		CreateContactDto contact2 = new CreateContactDto(addressBook2Id, "Jone", phoneNumbersList2);
 
-		ResponseEntity<String> responseEntity4=this.restTemplate.postForEntity(
+		ResponseEntity<String> responseEntity4 = this.restTemplate.postForEntity(
 				Contstants.SERVER_URL + port + Contstants.APPLICATION_CONTEXT_PATH + "/contacts", contact2,
 				String.class);
 		assertEquals(HttpStatus.CREATED, responseEntity4.getStatusCode());
@@ -89,9 +88,7 @@ public class IntegrationTests {
 				PagableData.class);
 		assertEquals(HttpStatus.OK, responseEntity5.getStatusCode());
 		PagableData<ContactDto> pagableDataResponse1 = responseEntity5.getBody();
-		assertEquals(1,pagableDataResponse1.getTotalRecords());
-		
-		
+		assertEquals(1, pagableDataResponse1.getTotalRecords());
 
 	}
 
