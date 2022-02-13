@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.assignment.reece.address_book_api.controllers.ContactsController;
+import com.assignment.reece.address_book_api.exception.NoDataException;
 import com.assignment.reece.address_book_api.persistence.entities.PhoneNumber;
 import com.assignment.reece.address_book_api.service.ContactData;
 import com.assignment.reece.address_book_api.service.ContactsService;
@@ -49,6 +50,20 @@ public class ContactsControllerTest {
 				.andExpect(jsonPath("$.totalRecords", is((int) data.getTotalRecords())))
 				.andExpect(jsonPath("$.data[0].contactPersonName", is(data.getData().get(0).getName())));
 	}
+	
+	@Test
+	public void givenNoContactsThenGetAllUniqueContactsShouldReturnNoContent() throws Exception {
+
+		Mockito.when(contactsService.getAllUniqueContacts(1, 5)).thenThrow(new NoDataException("No more contacts"));
+
+		RequestBuilder request = MockMvcRequestBuilders.get("/contacts?unique=true").accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON);
+
+		this.mockMvc.perform(request).andExpect(status().isNoContent());
+	}
+	
+	
+	
 
 	private PagableData<ContactData> getPagableContactData() {
 		List<ContactData> contactDataList = new ArrayList<ContactData>();
