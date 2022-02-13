@@ -98,15 +98,22 @@ public class ContactsService {
 
 		List<ContactData> contactDataList = new ArrayList<ContactData>();
 		for (String contactName : groupedByName.keySet()) {
-			List<PhoneNumber> phoneNumbers = new ArrayList<>();
+			List<PhoneNumber> uniquePhoneNumbers = new ArrayList<>();
 			List<Contact> allEntriesWithGivenContactName = groupedByName.get(contactName);
 
 			for (Contact contact : allEntriesWithGivenContactName) {
 				if (contact.getPhoneNumbers() != null && !contact.getPhoneNumbers().isEmpty()) {
-					phoneNumbers.addAll(contact.getPhoneNumbers());
+					for(PhoneNumber phnNumber: contact.getPhoneNumbers()) {
+						boolean isPhoneNumberAlreadyAdded = uniquePhoneNumbers.stream().anyMatch(p -> p.getNumber().equals(phnNumber.getNumber()));
+						
+						if(!isPhoneNumberAlreadyAdded) {
+							uniquePhoneNumbers.add(phnNumber);
+						}
+						
+					}
+					
 				}
 			}
-			List<PhoneNumber> uniquePhoneNumbers = phoneNumbers.stream().distinct().collect(Collectors.toList());
 			ContactData contactData = new ContactData(contactName, uniquePhoneNumbers);
 			contactDataList.add(contactData);
 		}

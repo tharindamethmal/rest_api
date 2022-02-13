@@ -72,7 +72,7 @@ public class ContactsController {
 			PagableData<ContactData> contactsPage = contactsService.getAllUniqueContacts(page, size);
 			List<ContactDto> contactDtoList = contactsPage.getData().stream().map(ContactDto::convert)
 					.collect(Collectors.toList());
-			return new PagableData<ContactDto>(contactDtoList, contactsPage.getTotalRecords(), contactsPage.getPage(),
+			return new PagableData<ContactDto>(contactDtoList, contactsPage.getTotalRecords(), contactsPage.getPage()+1,
 					contactsPage.getSize());
 		} else {
 			throw new MethodNotImplementedException("Not supported to get contacts with duplicates");
