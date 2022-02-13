@@ -31,7 +31,7 @@ public class AddressBooksService {
 	@Transactional
 	public void createAddressBook(String name) {
 		AddressBook toBeSavedadddressBook = new AddressBook(name, new ArrayList<Contact>());
-		assertAddressBook(toBeSavedadddressBook);
+		assertValidAddressBook(toBeSavedadddressBook);
 
 		addressBookRepository.save(toBeSavedadddressBook);
 	}
@@ -53,7 +53,7 @@ public class AddressBooksService {
 		return optAddressBook.get();
 	}
 
-	private void assertAddressBook(AddressBook addressBook) {
+	private void assertValidAddressBook(AddressBook addressBook) {
 		if (addressBook.getName() == null || addressBook.getName().isEmpty()) {
 			throw new BadRequestException("Address Book Name cannot be empty.");
 		}
